@@ -20,3 +20,26 @@ resource "aws_kms_key" "kafka_key" {
     Name = var.default_tag
   }
 }
+
+resource "aws_kms_key" "cloudwatch_key" {
+  description             = "Cloudwatch key"
+  deletion_window_in_days = 30
+  is_enabled              = true
+  enable_key_rotation     = true
+
+  tags = {
+    Name = var.default_tag
+  }
+}
+
+resource "aws_kms_key" "rds_key" {
+  description             = "RDS key"
+  deletion_window_in_days = 30
+  is_enabled              = true
+  enable_key_rotation     = true
+
+  tags = {
+    Name = var.default_tag
+  }
+}
+

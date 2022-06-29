@@ -5,7 +5,7 @@ resource "aws_security_group_rule" "kafka_0" {
   protocol          = "all"
   cidr_blocks       = ["0.0.0.0/0"]
   security_group_id = aws_security_group.kafka.id
-  description       = ""
+  description       = "Kafka egress"
 }
 
 resource "aws_security_group_rule" "kafka_1" {
@@ -16,4 +16,14 @@ resource "aws_security_group_rule" "kafka_1" {
   self              = true
   security_group_id = aws_security_group.kafka.id
   description       = "Self"
+}
+
+resource "aws_security_group_rule" "kafka_2" {
+  type              = "ingress"
+  from_port         = 9092
+  to_port           = 9092
+  protocol          = "tcp"
+  self              = true
+  security_group_id = aws_security_group.debezium.id
+  description       = "Allow Debezium"
 }

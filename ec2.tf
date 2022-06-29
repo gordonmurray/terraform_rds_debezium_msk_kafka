@@ -14,10 +14,9 @@ data "aws_ami" "ubuntu" {
   owners = ["099720109477"] # Canonical
 }
 
-# Create EC2 instance
 resource "aws_instance" "debezium" {
   ami                     = data.aws_ami.ubuntu.id
-  instance_type           = "t3.micro"
+  instance_type           = "t3.small"
   key_name                = aws_key_pair.key.key_name
   subnet_id               = aws_subnet.subnet-1a.id
   vpc_security_group_ids  = [aws_security_group.debezium.id]

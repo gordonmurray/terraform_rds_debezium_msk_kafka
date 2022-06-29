@@ -7,3 +7,8 @@ variable "default_tag" {
   type    = string
   default = "rds_debezium_msk"
 }
+
+
+variable "my_ip_address" {
+  type = string
+}
