@@ -45,7 +45,7 @@ resource "aws_db_option_group" "default" {
   name                     = "${var.database_name}-options"
   option_group_description = "${var.database_name} option group"
   engine_name              = "mariadb"
-  major_engine_version     = "mariadb10.6"
+  major_engine_version     = "10.6"
 
   tags = {
     Name = var.default_tag

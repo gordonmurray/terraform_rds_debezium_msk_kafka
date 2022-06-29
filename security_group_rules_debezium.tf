@@ -13,7 +13,7 @@ resource "aws_security_group_rule" "debezium_ssh" {
   from_port         = 22
   to_port           = 22
   protocol          = "tcp"
-  self              = true
-  security_group_id = var.my_ip_address
+  cidr_blocks       = ["${var.my_ip_address}/32"]
+  security_group_id = aws_security_group.debezium.id
   description       = "SSH access"
 }

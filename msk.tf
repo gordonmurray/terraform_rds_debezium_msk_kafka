@@ -5,13 +5,18 @@ resource "aws_msk_cluster" "kafka" {
   number_of_broker_nodes = 3
 
   broker_node_group_info {
-    instance_type   = "kafka.t3.small"
-    ebs_volume_size = 50
+    instance_type = "kafka.t3.small"
     client_subnets = [
       aws_subnet.subnet-1a.id,
       aws_subnet.subnet-1b.id,
       aws_subnet.subnet-1c.id,
     ]
+
+    storage_info {
+      ebs_storage_info {
+        volume_size = 50
+      }
+    }
 
     security_groups = [
       aws_security_group.kafka.id, # kafka
