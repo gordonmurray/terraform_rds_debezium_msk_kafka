@@ -1,5 +1,5 @@
 variable "aws_region" {
-  type = string
+  type    = string
   default = "eu-west-1"
 }
 
@@ -11,4 +11,9 @@ variable "default_tag" {
 
 variable "my_ip_address" {
   type = string
+}
+
+variable "database_name" {
+  type    = string
+  default = "my-database"
 }
