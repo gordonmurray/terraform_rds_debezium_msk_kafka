@@ -1,4 +1,4 @@
-# Terraform RDS, Debezium and a Kafka cluster using MSK
+# RDS, Debezium and a MSK Kafka cluster using Terraform
 
 A small project to stream data from an RDS instance to Kafka using Debezium
 
