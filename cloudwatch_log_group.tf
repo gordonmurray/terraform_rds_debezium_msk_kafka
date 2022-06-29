@@ -7,5 +7,4 @@ resource "aws_cloudwatch_log_group" "kafka_broker_logs" {
     Name = var.default_tag
   }
 
-      kms_key_id = aws_kms_key.cloudwatch_key.arn
 }
