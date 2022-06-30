@@ -1,0 +1,17 @@
+{
+    "name": "master-connector",
+    "config": {
+        "connector.class": "io.debezium.connector.mysql.MySqlConnector",
+        "database.hostname": "[RDS_ADDRESS]",
+        "database.port": "3306",
+        "database.user": "[DATABASE_USER]",
+        "database.password": "[DATABASE_PASSWORD]",
+        "database.server.id": "1",
+        "database.server.name": "[DATABASE_NAME]",
+        "database.include.list": "[DATABASE_NAME]",
+        "table.include.list": "[DATABASE_NAME].[DATABASE_TABLE]",
+        "database.history.kafka.bootstrap.servers": "[KAFKA_BROKERS]",
+        "database.history.kafka.topic": "history.[DATABASE_NAME]",
+        "include.schema.changes": "false"
+    }
+}

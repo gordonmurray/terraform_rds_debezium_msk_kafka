@@ -1,0 +1,50 @@
+{
+    "builders": [
+        {
+            "type": "amazon-ebs",
+            "profile": "{{user `profile`}}",
+            "region": "{{user `region`}}",
+            "source_ami": "ami-02df9ea15c1778c9c",
+            "instance_type": "{{user `instance_type`}}",
+            "force_deregister": "true",
+            "force_delete_snapshot": "true",
+            "ssh_username": "ubuntu",
+            "ami_name": "debezium",
+            "ami_regions": [
+                "{{user `region`}}"
+            ],
+            "tags": {
+                "Name": "debezium_instance"
+            }
+        }
+    ],
+    "provisioners": [
+        {
+            "type": "shell",
+            "inline": [
+                "sudo apt-get update",
+                "sudo apt-get install -y software-properties-common",
+                "sudo apt-get install default-jre -y",
+                "wget -qO - https://packages.confluent.io/deb/5.3/archive.key | sudo apt-key add -",
+                "sudo add-apt-repository -y 'deb [arch=amd64] https://packages.confluent.io/deb/5.3 stable main'",
+                "sudo apt-get update && sudo apt-get install -y confluent-hub-client confluent-common confluent-kafka-2.12",
+                "sudo confluent-hub install debezium/debezium-connector-mysql:latest"
+            ]
+        },
+        {
+            "type": "file",
+            "source": "./files/confluent-connect-distributed.service",
+            "destination": "/lib/systemd/system/confluent-connect-distributed.service"
+        },
+        {
+            "type": "file",
+            "source": "./files/connect-distributed.properties",
+            "destination": "/etc/kafka/connect-distributed.properties"
+        },
+        {
+            "type": "file",
+            "source": "./files/connector.json",
+            "destination": "/home/ubuntu/connector.json"
+        }
+    ]
+}
