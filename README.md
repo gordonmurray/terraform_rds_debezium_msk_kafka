@@ -9,6 +9,25 @@ A small project to stream data from an RDS instance to Kafka using Debezium
 
 Theres a way to avoid using an EC2 instance by using Kafka custom connectors which I need to try.
 
+### Instructions
+
+You will need to create the Debezium AMI first, using Packer. 
+
+Update `packer/variables.json to include your AWS credentials profile name, preferred region and instance size. Then run the following commands to Validate the file and Build an AMI that Terraform can use:
+
+Validate:
+> packer validate --var-file=variables.json debezium_instance.json
+
+Build:
+> packer build --var-file=variables.json debezium_instance.json
+
+Once your AMI has been created, you can now run Terraform to create the necessary infrastructure:
+
+```
+terraform init
+terraform apply
+```
+
 ### Estimated cost
 
 ```
