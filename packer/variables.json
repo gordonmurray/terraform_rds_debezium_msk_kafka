@@ -1,0 +1,6 @@
+{
+    "base_ami_id": "ami-0d75513e7706cf2d9",
+    "profile": "gordonmurray",
+    "region": "eu-west-1",
+    "instance_type": "t3.small"
+}

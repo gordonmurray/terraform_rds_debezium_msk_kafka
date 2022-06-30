@@ -1,21 +1,16 @@
-data "aws_ami" "ubuntu" {
+data "aws_ami" "debezium" {
   most_recent = true
 
   filter {
     name   = "name"
-    values = ["ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-*"]
+    values = ["debezium*"]
   }
 
-  filter {
-    name   = "virtualization-type"
-    values = ["hvm"]
-  }
-
-  owners = ["099720109477"] # Canonical
+  owners = ["016230046494"]
 }
 
 resource "aws_instance" "debezium" {
-  ami                     = data.aws_ami.ubuntu.id
+  ami                     = data.aws_ami.debezium.id
   instance_type           = "t3.small"
   key_name                = aws_key_pair.key.key_name
   subnet_id               = aws_subnet.subnet-1a.id
@@ -35,12 +30,6 @@ resource "aws_instance" "debezium" {
   tags = {
     Name = var.default_tag
   }
-
-  #provisioner "file" {
-  #  // upload the index.html file
-  #  source      = "files/index.html"
-  #  destination = "/home/ubuntu/index.html"
-  #}
 
   provisioner "remote-exec" {
     inline = [
