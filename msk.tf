@@ -19,7 +19,7 @@ resource "aws_msk_cluster" "kafka" {
     }
 
     security_groups = [
-      aws_security_group.kafka.id, # kafka
+      aws_security_group.kafka.id,
     ]
   }
 
@@ -33,13 +33,14 @@ resource "aws_msk_cluster" "kafka" {
       iam   = false
       scram = false
     }
+    unauthenticated = true
   }
 
   encryption_info {
     encryption_at_rest_kms_key_arn = aws_kms_key.kafka_key.arn
 
     encryption_in_transit {
-      client_broker = "TLS"
+      client_broker = "TLS_PLAINTEXT"
       in_cluster    = true
     }
   }
