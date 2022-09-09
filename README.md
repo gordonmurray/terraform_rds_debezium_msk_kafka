@@ -52,6 +52,20 @@ GRANT SELECT, RELOAD, PROCESS, REFERENCES, INDEX, SHOW DATABASES, CREATE TEMPORA
 FLUSH PRIVILEGES;
 ```
 
+'''
+
+### Debezium
+
+### Add a Kafka connector to Debezium
+
+> curl -X POST -H "Accept: application/json" -H "Content-Type: application/json" http://localhost:8083/connectors -d @rds.json
+
+### List connectors
+
+> curl -X GET http://localhost:8083/connectors
+
+
+
 ### Estimated cost
 
 ```

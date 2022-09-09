@@ -1,0 +1,17 @@
+{
+    "name": "rds-connector",
+    "config": {
+        "connector.class": "io.debezium.connector.mysql.MySqlConnector",
+        "database.hostname": "xxxxx.ccxt2rwryns5.eu-west-1.rds.amazonaws.com",
+        "database.port": "3306",
+        "database.user": "debezium",
+        "database.password": "xxxxx",
+        "database.server.id": "184054",
+        "database.server.name": "sample_database",
+        "database.include.list": "sample_database",
+        "table.include.list": "sample_database.people",
+        "database.history.kafka.bootstrap.servers": "xxxxxxxxxxxxxxxx",
+        "database.history.kafka.topic": "sample_database.people",
+        "include.schema.changes": "false"
+    }
+}
