@@ -26,7 +26,7 @@
                 "echo set debconf to Noninteractive",
                 "echo 'debconf debconf/frontend select Noninteractive' | sudo debconf-set-selections",
                 "sudo apt-get update",
-                "sudo apt install openjdk-11-jre openjdk-11-jdk -y",
+                "sudo apt install jq openjdk-11-jre openjdk-11-jdk -y",
                 "wget -qO - https://packages.confluent.io/deb/5.3/archive.key | sudo apt-key add -",
                 "sudo add-apt-repository -y 'deb [arch=amd64] https://packages.confluent.io/deb/5.3 stable main'",
                 "sudo apt-get update",
