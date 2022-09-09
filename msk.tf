@@ -1,4 +1,4 @@
-# 3 x t3.small: $142.28/month
+# 3 x t3.small: $109.28/month
 resource "aws_msk_cluster" "kafka" {
   cluster_name           = "kafka"
   kafka_version          = "2.6.2"

@@ -16,6 +16,7 @@ resource "aws_db_subnet_group" "default" {
   }
 }
 
+# $14.95/month
 resource "aws_db_instance" "default" {
   identifier                      = var.database_name
   allocated_storage               = 20
@@ -35,6 +36,7 @@ resource "aws_db_instance" "default" {
   backup_retention_period         = 3
   performance_insights_enabled    = true
   performance_insights_kms_key_id = aws_kms_key.rds_key.arn
+  vpc_security_group_ids          = [aws_security_group.rds.id]
 
   tags = {
     Name = var.default_tag

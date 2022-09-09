@@ -9,6 +9,7 @@ data "aws_ami" "debezium" {
   owners = ["016230046494"]
 }
 
+# $17.74
 resource "aws_instance" "debezium" {
   ami                     = data.aws_ami.debezium.id
   instance_type           = "t3.small"
@@ -29,22 +30,6 @@ resource "aws_instance" "debezium" {
 
   tags = {
     Name = var.default_tag
-  }
-
-  provisioner "remote-exec" {
-    inline = [
-      "sudo apt update"
-    ]
-  }
-
-  connection {
-    // connect over ssh
-    type        = "ssh"
-    user        = "ubuntu"
-    private_key = file("~/.ssh/id_rsa")
-    timeout     = "2m"
-    port        = "22"
-    host        = aws_instance.debezium.public_dns
   }
 
   metadata_options {
