@@ -46,6 +46,10 @@ INSERT INTO sample_database.people (name, age, comments) VALUES ('Mary', 35, nul
 INSERT INTO sample_database.people (name, age, comments) VALUES ('Jane', 6, null);
 INSERT INTO sample_database.people (name, age, comments) VALUES ('Beth', 9, null);
 INSERT INTO sample_database.people (name, age, comments) VALUES ('Emma', 14, null);
+
+CREATE USER 'debezium'@'%' IDENTIFIED BY 'password';
+GRANT SELECT, RELOAD, PROCESS, REFERENCES, INDEX, SHOW DATABASES, CREATE TEMPORARY TABLES, LOCK TABLES, SHOW VIEW, EVENT, REPLICATION CLIENT, TRIGGER ON *.* TO 'debezium'@'%';
+FLUSH PRIVILEGES;
 ```
 
 ### Estimated cost
