@@ -28,6 +28,26 @@ terraform init
 terraform apply
 ```
 
+### Sample data 
+
+```
+create database if not exists sample_database;
+
+CREATE TABLE IF NOT EXISTS sample_database.people(
+    id int not null AUTO_INCREMENT primary key,
+    name varchar(100),
+    age int,
+    comments varchar(100)
+)AUTO_INCREMENT=1;
+
+INSERT INTO sample_database.people (name, age, comments) VALUES ('Bob', 44, null);
+INSERT INTO sample_database.people (name, age, comments) VALUES ('Fred', 22, null);
+INSERT INTO sample_database.people (name, age, comments) VALUES ('Mary', 35, null);
+INSERT INTO sample_database.people (name, age, comments) VALUES ('Jane', 6, null);
+INSERT INTO sample_database.people (name, age, comments) VALUES ('Beth', 9, null);
+INSERT INTO sample_database.people (name, age, comments) VALUES ('Emma', 14, null);
+```
+
 ### Estimated cost
 
 ```
