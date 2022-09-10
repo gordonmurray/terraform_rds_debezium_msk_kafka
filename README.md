@@ -48,7 +48,7 @@ INSERT INTO sample_database.people (name, age, comments) VALUES ('Beth', 9, null
 INSERT INTO sample_database.people (name, age, comments) VALUES ('Emma', 14, null);
 
 CREATE USER 'debezium'@'%' IDENTIFIED BY 'password';
-GRANT SELECT, RELOAD, PROCESS, REFERENCES, INDEX, SHOW DATABASES, CREATE TEMPORARY TABLES, LOCK TABLES, SHOW VIEW, EVENT, REPLICATION CLIENT, TRIGGER ON *.* TO 'debezium'@'%';
+GRANT SELECT, RELOAD, PROCESS, REFERENCES, INDEX, SHOW DATABASES, CREATE TEMPORARY TABLES, REPLICATION SLAVE, LOCK TABLES, SHOW VIEW, EVENT, REPLICATION CLIENT, TRIGGER ON *.* TO 'debezium'@'%';
 FLUSH PRIVILEGES;
 ```
 
@@ -64,7 +64,28 @@ FLUSH PRIVILEGES;
 
 > curl -X GET http://localhost:8083/connectors
 
+### List topics
 
+```
+wget https://dlcdn.apache.org/kafka/3.2.1/kafka_2.13-3.2.1.tgz
+tar -xzf kafka_2.13-3.2.1.tgz 
+./kafka-topics.sh --list --bootstrap-server aaaaa:9092,bbbbb:9092,cccc:9092
+```
+
+### Subscribe to a topic
+
+```
+./kafka/bin/kafka-console-consumer.sh --bootstrap-server b-1.kafka.2bj1l3.c9.kafka.eu-west-1.amazonaws.com:9092,b-2.kafka.2bj1l3.c9.kafka.eu-west-1.amazonaws.com:9092,b-3.kafka.2bj1l3.c9.kafka.eu-west-1.amazonaws.com:9092 --from-beginning --topic sample_database.people
+```
+
+## Install kcctl
+
+```
+wget https://github.com/kcctl/kcctl/releases/download/v1.0.0.Alpha5/kcctl-1.0.0.Alpha5-linux-x86_64.tar.gz
+tar -xzf  kcctl-1.0.0.Alpha5-linux-x86_64.tar.gz
+cd kcctl-1.0.0.Alpha5-linux-x86_64
+./bin/kcctl get connectors
+```
 
 ### Estimated cost
 
