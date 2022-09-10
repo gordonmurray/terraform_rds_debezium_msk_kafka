@@ -31,9 +31,11 @@ resource "aws_msk_cluster" "kafka" {
   client_authentication {
     sasl {
       iam   = false
-      scram = false
+      scram = true
     }
     unauthenticated = true
+
+    tls {}
   }
 
   encryption_info {
@@ -80,4 +82,11 @@ resource "aws_msk_configuration" "configuration_debezium" {
 auto.create.topics.enable = true
 zookeeper.connection.timeout.ms = 1000
 PROPERTIES
+}
+
+resource "aws_msk_scram_secret_association" "example" {
+  cluster_arn     = aws_msk_cluster.kafka.arn
+  secret_arn_list = [aws_secretsmanager_secret.msk.arn]
+
+  depends_on = [aws_secretsmanager_secret_version.msk]
 }
