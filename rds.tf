@@ -16,7 +16,6 @@ resource "aws_db_subnet_group" "default" {
   }
 }
 
-# $14.95/month
 resource "aws_db_instance" "default" {
   identifier                      = var.database_name
   allocated_storage               = 20

@@ -8,7 +8,6 @@ variable "default_tag" {
   default = "rds_debezium_msk"
 }
 
-
 variable "my_ip_address" {
   type = string
 }
@@ -16,4 +15,8 @@ variable "my_ip_address" {
 variable "database_name" {
   type    = string
   default = "my-database"
+}
+
+variable "aws_account_id" {
+  type = string
 }

@@ -6,10 +6,9 @@ data "aws_ami" "debezium" {
     values = ["debezium*"]
   }
 
-  owners = ["016230046494"]
+  owners = [var.aws_account_id]
 }
 
-# $17.74
 resource "aws_instance" "debezium" {
   ami                     = data.aws_ami.debezium.id
   instance_type           = "t3.small"
@@ -36,5 +35,14 @@ resource "aws_instance" "debezium" {
     http_tokens   = "required"
     http_endpoint = "enabled"
   }
+
+  user_data = templatefile("files/user_data.sh", {
+    brokers           = aws_msk_cluster.kafka.bootstrap_brokers
+    rds_address       = aws_db_instance.default.address
+    database_user     = "debezium"
+    database_password = "password"
+    database_schema   = "sample_database"
+    database_table    = "people"
+  })
 
 }

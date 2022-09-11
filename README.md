@@ -7,9 +7,15 @@ A small project to stream data from an RDS instance to Kafka using Debezium
 * Creates a Kafka cluster using AWS MSK
 * Creates an EC2 instance with Debezium to monitor a table in the RDS instance
 
-There is a way to avoid using an EC2 instance by using Kafka custom connectors which I need to try.
+## To do
 
-## Deploy the infrastructure
+* [ ] Automatically populare the RDS instance with databases, tables and users
+* [ ] EC2 user data to fully populate kafka connect files
+* [ ] Try the custom connectors within MSK instead of an EC2 instance with Debezium
+* [ ] Use MSK Serverless
+* [ ] Monitoring
+
+ ## Deploy the infrastructure
 
 You will need to create the Debezium AMI first, using Packer. 
 
@@ -28,7 +34,7 @@ terraform init
 terraform apply
 ```
 
-### Sample data for the RDS instance
+## Sample data for the RDS instance
 
 ```
 create database if not exists sample_database;
@@ -54,7 +60,7 @@ FLUSH PRIVILEGES;
 
 '''
 
-### Debezium
+## Debezium
 
 ### Add a Kafka connector to Debezium
 
@@ -75,10 +81,11 @@ tar -xzf kafka_2.13-3.2.1.tgz
 ### Subscribe to a topic
 
 ```
-./kafka/bin/kafka-console-consumer.sh --bootstrap-server b-1.kafka.2bj1l3.c9.kafka.eu-west-1.amazonaws.com:9092,b-2.kafka.2bj1l3.c9.kafka.eu-west-1.amazonaws.com:9092,b-3.kafka.2bj1l3.c9.kafka.eu-west-1.amazonaws.com:9092 --from-beginning --topic sample_database.people
+./kafka_2.13-3.2.1/bin/kafka-console-consumer.sh --bootstrap-server ${BROKERS} --from-beginning --topic sample2.sample_database.people
+
 ```
 
-## Install kcctl
+### Install kcctl
 
 ```
 wget https://github.com/kcctl/kcctl/releases/download/v1.0.0.Alpha5/kcctl-1.0.0.Alpha5-linux-x86_64.tar.gz
@@ -87,10 +94,10 @@ cd kcctl-1.0.0.Alpha5-linux-x86_64
 ./bin/kcctl get connectors
 ```
 
-### Estimated cost
+## Estimated cost
 
 ```
-Project: gordonmurray/terraform_rds_debezium_msk_kafka/.
+Project: gordonmurray/terraform_rds_debezium_msk_kafka
 
  Name                                                             Monthly Qty  Unit                    Monthly Cost 
                                                                                                                     
@@ -135,22 +142,28 @@ Project: gordonmurray/terraform_rds_debezium_msk_kafka/.
  └─ RSA GenerateDataKeyPair requests                        Monthly cost depends on usage: $0.10 per 10k requests   
                                                                                                                     
  aws_msk_cluster.kafka                                                                                              
- ├─ Instance (kafka.t3.small)                                           2,190  hours                        $109.28 
- └─ Storage                                                               150  GB                            $16.50 
+ └─ Instance (kafka.t3.small)                                           2,190  hours                        $109.28 
                                                                                                                     
  aws_secretsmanager_secret.example                                                                                  
  ├─ Secret                                                                  1  months                         $0.40 
  └─ API requests                                            Monthly cost depends on usage: $0.05 per 10k requests   
                                                                                                                     
- OVERALL TOTAL                                                                                              $162.88 
+ aws_secretsmanager_secret.msk                                                                                      
+ ├─ Secret                                                                  1  months                         $0.40 
+ └─ API requests                                            Monthly cost depends on usage: $0.05 per 10k requests   
+                                                                                                                    
+ OVERALL TOTAL                                                                                              $146.78 
 ──────────────────────────────────
-35 cloud resources were detected:
-∙ 9 were estimated, 4 of which include usage-based costs, see https://infracost.io/usage-file
-∙ 26 were free:
+40 cloud resources were detected:
+∙ 10 were estimated, 5 of which include usage-based costs, see https://infracost.io/usage-file
+∙ 29 were free:
   ∙ 7 x aws_security_group_rule
   ∙ 3 x aws_route_table_association
   ∙ 3 x aws_security_group
   ∙ 3 x aws_subnet
+  ∙ 2 x aws_secretsmanager_secret_version
+  ∙ 1 x aws_db_option_group
+  ∙ 1 x aws_db_parameter_group
   ∙ 1 x aws_db_subnet_group
   ∙ 1 x aws_eip
   ∙ 1 x aws_eip_association
@@ -159,6 +172,7 @@ Project: gordonmurray/terraform_rds_debezium_msk_kafka/.
   ∙ 1 x aws_msk_configuration
   ∙ 1 x aws_route
   ∙ 1 x aws_route_table
-  ∙ 1 x aws_secretsmanager_secret_version
   ∙ 1 x aws_vpc
-```
+∙ 1 is not supported yet, see https://infracost.io/requested-resources:
+  ∙ 1 x aws_msk_scram_secret_association
+  ```

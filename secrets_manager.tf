@@ -27,7 +27,16 @@ resource "aws_secretsmanager_secret" "msk" {
   }
 }
 
+# MSK password
+resource "random_password" "msk_password" {
+  length  = 16
+  special = true
+}
+
 resource "aws_secretsmanager_secret_version" "msk" {
-  secret_id     = aws_secretsmanager_secret.msk.id
-  secret_string = jsonencode({ "username" = "msk_user", "password" = "msk_password2340" })
+  secret_id = aws_secretsmanager_secret.msk.id
+  secret_string = jsonencode({
+    "username" = "msk_user",
+    "password" = random_password.msk_password.result
+  })
 }
