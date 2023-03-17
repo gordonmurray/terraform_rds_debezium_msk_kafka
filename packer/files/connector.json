@@ -2,7 +2,7 @@
     "name": "database_connector",
     "config": {
         "name": "database_connector",
-        "topic.prefix": "",
+        "topic.prefix": "sample",
         "connector.class": "io.debezium.connector.mysql.MySqlConnector",
         "database.server.id": "1",
         "tasks.max": "1",
