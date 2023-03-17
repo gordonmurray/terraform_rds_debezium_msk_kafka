@@ -16,6 +16,7 @@ sed -i "s/\[DATABASE_HOST\]/${database_host}/g" /home/ubuntu/generate_data.sh
 sed -i "s/\[DATABASE_USERNAME\]/${database_username}/g" /home/ubuntu/generate_data.sh
 sed -i "s/\[DATABASE_PASSWORD\]/${database_password}/g" /home/ubuntu/generate_data.sh
 sed -i "s/\[DATABASE_SCHEMA\]/${database_schema}/g" /home/ubuntu/generate_data.sh
+sed -i "s/\[DATABASE_TABLE\]/${database_table}/g" /home/ubuntu/generate_data.sh
 
 # Populate the apicurio registry start script
 sed -i "s/\[KAFKA_BROKERS\]/${brokers}/g" /home/ubuntu/start_registry.sh

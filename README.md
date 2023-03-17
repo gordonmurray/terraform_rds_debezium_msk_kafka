@@ -30,62 +30,32 @@ terraform apply
 ## Sample data for the RDS instance
 
 ```
-create database if not exists sample_database;
+CREATE USER 'debezium'@'%' IDENTIFIED BY 'password';
+GRANT SELECT, RELOAD, PROCESS, REFERENCES, INDEX, SHOW DATABASES, CREATE TEMPORARY TABLES, REPLICATION SLAVE, LOCK TABLES, SHOW VIEW, EVENT, REPLICATION CLIENT, TRIGGER ON *.* TO 'debezium'@'%';
+FLUSH PRIVILEGES;
+
+CREATE DATABASE IF NOT EXISTS sample_database;
 
 CREATE TABLE IF NOT EXISTS sample_database.people(
     id int not null AUTO_INCREMENT primary key,
     name varchar(100),
-    age int,
-    comments varchar(100)
-)AUTO_INCREMENT=1;
-
-INSERT INTO sample_database.people (name, age, comments) VALUES ('Bob', 44, null);
-INSERT INTO sample_database.people (name, age, comments) VALUES ('Fred', 22, null);
-INSERT INTO sample_database.people (name, age, comments) VALUES ('Mary', 35, null);
-INSERT INTO sample_database.people (name, age, comments) VALUES ('Jane', 6, null);
-INSERT INTO sample_database.people (name, age, comments) VALUES ('Beth', 9, null);
-INSERT INTO sample_database.people (name, age, comments) VALUES ('Emma', 14, null);
-
-CREATE USER 'debezium'@'%' IDENTIFIED BY 'password';
-GRANT SELECT, RELOAD, PROCESS, REFERENCES, INDEX, SHOW DATABASES, CREATE TEMPORARY TABLES, REPLICATION SLAVE, LOCK TABLES, SHOW VIEW, EVENT, REPLICATION CLIENT, TRIGGER ON *.* TO 'debezium'@'%';
-FLUSH PRIVILEGES;
+    address varchar(255),
+    phone_number varchar(100),
+    created_at DATETIME
+) AUTO_INCREMENT=1;
 ```
 
 '''
 
 ## Debezium
 
-### Add a Kafka connector to Debezium
-
-> curl -X POST -H "Accept: application/json" -H "Content-Type: application/json" http://localhost:8083/connectors -d @rds.json
-
 ### List connectors
 
 > curl -X GET http://localhost:8083/connectors
 
-### List topics
+### Add a Kafka connector to Debezium
 
-```
-wget https://dlcdn.apache.org/kafka/3.2.1/kafka_2.13-3.2.1.tgz
-tar -xzf kafka_2.13-3.2.1.tgz
-./kafka-topics.sh --list --bootstrap-server aaaaa:9092,bbbbb:9092,cccc:9092
-```
-
-### Subscribe to a topic
-
-```
-./kafka_2.13-3.2.1/bin/kafka-console-consumer.sh --bootstrap-server ${BROKERS} --from-beginning --topic sample2.sample_database.people
-
-```
-
-### Install kcctl
-
-```
-wget https://github.com/kcctl/kcctl/releases/download/v1.0.0.Alpha5/kcctl-1.0.0.Alpha5-linux-x86_64.tar.gz
-tar -xzf  kcctl-1.0.0.Alpha5-linux-x86_64.tar.gz
-cd kcctl-1.0.0.Alpha5-linux-x86_64
-./bin/kcctl get connectors
-```
+> curl -X POST -H "Accept: application/json" -H "Content-Type: application/json" http://localhost:8083/connectors -d @connector.json
 
 ## Estimated cost
 

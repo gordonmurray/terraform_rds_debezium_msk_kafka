@@ -19,10 +19,10 @@ do
   datetime=$(date '+%Y-%m-%d %H:%M:%S')
 
   # Construct SQL query
-  query="INSERT INTO $table (name, address, phone_number, created_at) VALUES ('$name', '$address', '$phone_number', '$datetime')"
+  query="INSERT INTO [DATABASE_TABLE] (name, address, phone_number, created_at) VALUES ('$name', '$address', '$phone_number', '$datetime')"
 
   # Insert data into database
-  mysql -h$host-u$user -p$password $database -e "$query"
+  mysql -h $host -u $user -p$password $database -e "$query"
 
   # Wait for a few minutes before inserting new data
   sleep 300

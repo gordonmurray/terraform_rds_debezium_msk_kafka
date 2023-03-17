@@ -29,7 +29,10 @@
                 "sudo apt install jq openjdk-11-jre openjdk-11-jdk -y",
                 "curl https://downloads.apache.org/kafka/3.4.0/kafka_2.12-3.4.0.tgz -o ~/kafka.tgz",
                 "mkdir ~/kafka && cd ~/kafka",
-                "tar -xvzf ~/kafka.tgz --strip 1"
+                "tar -xvzf ~/kafka.tgz --strip 1",
+                "wget https://repo1.maven.org/maven2/io/debezium/debezium-connector-mysql/2.1.2.Final/debezium-connector-mysql-2.1.2.Final-plugin.tar.gz",
+                "tar xzf debezium-connector-mysql-2.1.2.Final-plugin.tar.gz",
+                "sudo mv debezium-connector-mysql /usr/share/java/"
             ]
         },
         {
