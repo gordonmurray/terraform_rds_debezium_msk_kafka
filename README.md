@@ -1,19 +1,12 @@
 # RDS, Debezium and a MSK Kafka cluster using Terraform
 
-A small project to stream data from an RDS instance to Kafka using Debezium
+A project to stream data from an RDS instance to Kafka using Debezium using Apache Avro serialization.
 
 * Creates a MariaDB RDS instance
-* Uses AWS Secrets Manager to store RDS access
+* Uses AWS Secrets Manager to store RDS access details
 * Creates a Kafka cluster using AWS MSK
 * Creates an EC2 instance with Debezium to monitor a table in the RDS instance
-
-## To do
-
-* [ ] Automatically populare the RDS instance with databases, tables and users
-* [ ] EC2 user data to fully populate kafka connect files
-* [ ] Try the custom connectors within MSK instead of an EC2 instance with Debezium
-* [ ] Use MSK Serverless
-* [ ] Monitoring
+* Uses Apicurio schema registry for Apache Avro serialization
 
  ## Deploy the infrastructure
 

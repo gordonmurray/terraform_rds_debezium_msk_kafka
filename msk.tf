@@ -25,16 +25,19 @@ resource "aws_msk_cluster" "kafka" {
 
 
   configuration_info {
-    arn      = aws_msk_configuration.configuration.arn
+    arn      = aws_msk_configuration.configuration_debezium.arn
     revision = 1
   }
 
   client_authentication {
+    unauthenticated = true
 
+    sasl {
+      iam   = false
+      scram = false
+    }
 
     tls {}
-
-
   }
 
   encryption_info {
@@ -42,7 +45,6 @@ resource "aws_msk_cluster" "kafka" {
 
     encryption_in_transit {
       client_broker = "PLAINTEXT"
-      in_cluster    = true
     }
   }
 
@@ -92,11 +94,4 @@ resource "aws_msk_configuration" "configuration_debezium" {
 auto.create.topics.enable = true
 zookeeper.connection.timeout.ms = 1000
 PROPERTIES
-}
-
-resource "aws_msk_scram_secret_association" "example" {
-  cluster_arn     = aws_msk_cluster.kafka.arn
-  secret_arn_list = [aws_secretsmanager_secret.msk.arn]
-
-  depends_on = [aws_secretsmanager_secret_version.msk]
 }
