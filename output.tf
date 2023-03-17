@@ -1,5 +1,13 @@
+output "rds_host" {
+  value = aws_db_instance.default.address
+}
+
+output "rds_username" {
+  value = aws_db_instance.default.username
+}
+
 output "rds_password" {
-  value     = random_password.password.result
+  value     = aws_db_instance.default.password
   sensitive = true
 }
 
@@ -11,6 +19,3 @@ output "kafka" {
   value = aws_msk_cluster.kafka.bootstrap_brokers
 }
 
-output "rds" {
-  value = aws_db_instance.default.address
-}

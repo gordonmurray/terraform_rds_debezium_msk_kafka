@@ -17,25 +17,24 @@ resource "aws_db_subnet_group" "default" {
 }
 
 resource "aws_db_instance" "default" {
-  identifier                      = var.database_name
-  allocated_storage               = 20
-  storage_type                    = "gp2"
-  engine                          = "mariadb"
-  engine_version                  = "10.6.7"
-  instance_class                  = "db.t4g.micro"
-  db_subnet_group_name            = aws_db_subnet_group.default.name
-  username                        = "Admin"
-  password                        = random_password.password.result
-  parameter_group_name            = aws_db_parameter_group.default.id
-  option_group_name               = aws_db_option_group.default.id
-  skip_final_snapshot             = true
-  publicly_accessible             = false
-  multi_az                        = false
-  storage_encrypted               = true
-  backup_retention_period         = 3
-  performance_insights_enabled    = true
-  performance_insights_kms_key_id = aws_kms_key.rds_key.arn
-  vpc_security_group_ids          = [aws_security_group.rds.id]
+  identifier                   = var.database_name
+  allocated_storage            = 20
+  storage_type                 = "gp2"
+  engine                       = "mariadb"
+  engine_version               = "10.6.7"
+  instance_class               = "db.t4g.micro"
+  db_subnet_group_name         = aws_db_subnet_group.default.name
+  username                     = "Admin"
+  password                     = random_password.password.result
+  parameter_group_name         = aws_db_parameter_group.default.id
+  option_group_name            = aws_db_option_group.default.id
+  skip_final_snapshot          = true
+  publicly_accessible          = false
+  multi_az                     = false
+  storage_encrypted            = true
+  backup_retention_period      = 3
+  performance_insights_enabled = false
+  vpc_security_group_ids       = [aws_security_group.rds.id]
 
   tags = {
     Name = var.default_tag

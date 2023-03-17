@@ -23,26 +23,25 @@ resource "aws_msk_cluster" "kafka" {
     ]
   }
 
+
   configuration_info {
-    arn      = aws_msk_configuration.configuration_debezium.arn
+    arn      = aws_msk_configuration.configuration.arn
     revision = 1
   }
 
   client_authentication {
-    sasl {
-      iam   = false
-      scram = true
-    }
-    unauthenticated = false
+
 
     tls {}
+
+
   }
 
   encryption_info {
     encryption_at_rest_kms_key_arn = aws_kms_key.kafka_key.arn
 
     encryption_in_transit {
-      client_broker = "TLS"
+      client_broker = "PLAINTEXT"
       in_cluster    = true
     }
   }
@@ -60,13 +59,24 @@ resource "aws_msk_cluster" "kafka" {
 
   logging_info {
     broker_logs {
+
       cloudwatch_logs {
         enabled   = true
         log_group = aws_cloudwatch_log_group.kafka_broker_logs.name
       }
 
+      firehose {
+        enabled = false
+      }
+
+      s3 {
+        enabled = false
+      }
+
     }
   }
+
+  timeouts {}
 
   tags = {
     Name = var.default_tag
