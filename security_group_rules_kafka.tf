@@ -20,10 +20,10 @@ resource "aws_security_group_rule" "kafka_1" {
 
 resource "aws_security_group_rule" "kafka_2" {
   type                     = "ingress"
-  from_port                = 9092
-  to_port                  = 9092
-  protocol                 = "tcp"
+  from_port                = 0
+  to_port                  = 0
+  protocol                 = "all"
   security_group_id        = aws_security_group.kafka.id
   source_security_group_id = aws_security_group.debezium.id
-  description              = "Allow Debezium in"
+  description              = "Allow Debezium to talk to the brokers"
 }

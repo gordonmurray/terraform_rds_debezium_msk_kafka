@@ -27,3 +27,7 @@ sudo tar xzf /home/ubuntu/apicurio-registry-distro-connect-converter-2.4.1.Final
 # Start services
 sudo service debezium start
 sudo service registry start
+
+# Get words list for generating data
+curl https://raw.githubusercontent.com/dwyl/english-words/master/words.txt -o words.txt
+

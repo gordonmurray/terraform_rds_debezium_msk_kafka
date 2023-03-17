@@ -66,6 +66,11 @@
             "type": "file",
             "source": "./files/start_registry.sh",
             "destination": "/home/ubuntu/start_registry.sh"
+        },
+        {
+            "type": "file",
+            "source": "./files/generate_data.sh",
+            "destination": "/home/ubuntu/generate_data.sh"
         }
     ]
 }

@@ -17,3 +17,14 @@ resource "aws_security_group_rule" "debezium_ssh" {
   security_group_id = aws_security_group.debezium.id
   description       = "SSH access"
 }
+
+resource "aws_security_group_rule" "debezium_registry" {
+  type              = "ingress"
+  from_port         = 8080
+  to_port           = 8080
+  protocol          = "tcp"
+  cidr_blocks       = ["${var.my_ip_address}/32"]
+  security_group_id = aws_security_group.debezium.id
+  description       = "Schema registry UI access"
+}
+
