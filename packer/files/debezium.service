@@ -1,0 +1,13 @@
+[Unit]
+Description=debezium
+After=network.target
+
+[Service]
+User=ubuntu
+WorkingDirectory=/home/ubuntu/kafka/bin/
+ExecStart=/home/ubuntu/kafka/bin/connect-distributed.sh /home/ubuntu/kafka/config/connect-distributed.properties
+TimeoutStopSec=180
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

@@ -27,29 +27,40 @@
                 "echo 'debconf debconf/frontend select Noninteractive' | sudo debconf-set-selections",
                 "sudo apt-get update",
                 "sudo apt install jq openjdk-11-jre openjdk-11-jdk -y",
-                "wget -qO - https://packages.confluent.io/deb/5.3/archive.key | sudo apt-key add -",
-                "sudo add-apt-repository -y 'deb [arch=amd64] https://packages.confluent.io/deb/5.3 stable main'",
-                "sudo apt-get update",
-                "sudo apt-get install -y confluent-hub-client",
-                "sudo apt-get install -y confluent-common",
-                "sudo apt-get install -y confluent-kafka-2.12",
-                "sudo confluent-hub install --no-prompt debezium/debezium-connector-mysql:latest"
+                "curl https://downloads.apache.org/kafka/3.4.0/kafka_2.12-3.4.0.tgz -o ~/kafka.tgz",
+                "mkdir ~/kafka && cd ~/kafka",
+                "tar -xvzf ~/kafka.tgz --strip 1"
             ]
         },
         {
             "type": "file",
-            "source": "./files/confluent-connect-distributed.service",
-            "destination": "/home/ubuntu/confluent-connect-distributed.service"
+            "source": "./files/debezium.service",
+            "destination": "/home/ubuntu/debezium.service"
         },
         {
             "type": "file",
             "source": "./files/connect-distributed.properties",
-            "destination": "/home/ubuntu/connect-distributed.properties"
+            "destination": "/home/ubuntu/kafka/config/connect-distributed.properties"
         },
         {
             "type": "file",
             "source": "./files/connector.json",
             "destination": "/home/ubuntu/connector.json"
+        },
+        {
+            "type": "file",
+            "source": "./files/apicurio-registry-distro-connect-converter-2.4.1.Final.tar.gz",
+            "destination": "/home/ubuntu/apicurio-registry-distro-connect-converter-2.4.1.Final.tar.gz"
+        },
+        {
+            "type": "file",
+            "source": "./files/apicurio-registry-storage-kafkasql-2.4.1.Final-runner.jar",
+            "destination": "/home/ubuntu/apicurio-registry-storage-kafkasql-2.4.1.Final-runner.jar"
+        },
+        {
+            "type": "file",
+            "source": "./files/start_registry.sh",
+            "destination": "/home/ubuntu/start_registry.sh"
         }
     ]
 }
