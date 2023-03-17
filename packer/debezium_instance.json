@@ -4,7 +4,7 @@
             "type": "amazon-ebs",
             "profile": "{{user `profile`}}",
             "region": "{{user `region`}}",
-            "source_ami": "ami-02df9ea15c1778c9c",
+            "source_ami": "ami-06d94a781b544c133",
             "instance_type": "{{user `instance_type`}}",
             "force_deregister": "true",
             "force_delete_snapshot": "true",
@@ -36,6 +36,11 @@
             "type": "file",
             "source": "./files/debezium.service",
             "destination": "/home/ubuntu/debezium.service"
+        },
+        {
+            "type": "file",
+            "source": "./files/registry.service",
+            "destination": "/home/ubuntu/registry.service"
         },
         {
             "type": "file",

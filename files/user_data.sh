@@ -21,8 +21,8 @@ sudo chmod +x /home/ubuntu/start_registry.sh
 sudo systemctl daemon-reload
 
 # Decompress the Avro jars
-sudo mkdir /usr/share/java/apicurio-registry-connect-converter
-tar xzf /home/ubuntu/apicurio-registry-distro-connect-converter-2.4.1.Final.tar.gz -C /usr/share/java/apicurio-registry-connect-converter
+sudo mkdir -p /usr/share/java/apicurio-registry-connect-converter
+sudo tar xzf /home/ubuntu/apicurio-registry-distro-connect-converter-2.4.1.Final.tar.gz -C /usr/share/java/apicurio-registry-connect-converter
 
 # Start services
 sudo service debezium start
