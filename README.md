@@ -1,6 +1,6 @@
 # RDS, Debezium and a MSK Kafka cluster using Terraform
 
-Creates an entire environment within its own VPC on AWS to stream data from a MariaDB RDS instance to Kafka using Debezium using Avro serialization
+Creates an entire environment within its own VPC on AWS to stream data from a MariaDB RDS instance to Kafka using Debezium using Avro serialization. Apicurio provides a schema registry for the data.
 
 * Creates a MariaDB RDS instance
 * Uses AWS Secrets Manager to store RDS access details
@@ -9,7 +9,16 @@ Creates an entire environment within its own VPC on AWS to stream data from a Ma
 * Creates an EC2 instance with Debezium to replicate a table in the RDS instance to Kafka
 * Installs the Apicurio schema registry for Apache Avro serialization
 
- ## Deploy the infrastructure
+## Table of Contents
+
+- [Prepare an AMI using Packer](#prepare-an-ami-using-packer)
+- [Deploy the infrastructure](#deploy-the-infrastructure-using-terraform)
+- [Debezium](#debezium)
+- [Schema registry](#schema-registry)
+- [Security](#security)
+- [Infrastrcuture cost](#infrastrcuture-cost)
+
+ ## Prepare an AMI using Packer
 
 You will need to create the Debezium AMI first, using Packer.
 
@@ -22,6 +31,8 @@ Build:
 > packer build --var-file=variables.json debezium_instance.json
 
 Takes around 6 minutes.
+
+ ## Deploy the infrastructure using Terraform
 
 Once your AMI has been created, you can run Terraform to create the necessary infrastructure.
 
@@ -50,6 +61,13 @@ Debezium and the connector to the database should start automatically. To confir
 ### Add the connector to Debezium
 
 > curl -X POST -H "Accept: application/json" -H "Content-Type: application/json" http://localhost:8083/connectors -d @connector.json
+
+## Schema registry
+
+Schemas will be created in Apicurio schema regitry automatically by Debezium
+
+![Apicurio UI](files/apicurio.png "Apicurio schema registry")
+
 
 ## Security
 
