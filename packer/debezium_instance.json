@@ -39,7 +39,7 @@
                 "wget https://repo1.maven.org/maven2/io/apicurio/apicurio-registry-distro-connect-converter/2.4.1.Final/apicurio-registry-distro-connect-converter-2.4.1.Final.tar.gz",
                 "sudo mkdir -p /usr/share/java/apicurio-registry-connect-converter",
                 "sudo tar xzf /home/ubuntu/apicurio-registry-distro-connect-converter-2.4.1.Final.tar.gz -C /usr/share/java/apicurio-registry-connect-converter",
-                "curl https://raw.githubusercontent.com/dwyl/english-words/master/words.txt -o words.txt"
+                "curl https://raw.githubusercontent.com/dwyl/english-words/master/words.txt -o /home/ubuntu/words.txt"
             ]
         },
         {

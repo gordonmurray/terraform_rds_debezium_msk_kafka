@@ -1,4 +1,5 @@
 #!/bin/bash
+sudo apt install mariadb-client-core-10.6 -y
 
 # Set database connection parameters
 host="[DATABASE_HOST]"
@@ -7,7 +8,14 @@ password="[DATABASE_PASSWORD]"
 database="[DATABASE_SCHEMA]"
 table="[DATABASE_TABLE]"
 
-# Loop to insert fake data every few minutes
+# Prepare database
+mysql -h $host -u $user -p$password -e "CREATE USER IF NOT EXISTS 'debezium'@'%' IDENTIFIED BY 'password';"
+mysql -h $host -u $user -p$password -e "GRANT SELECT, RELOAD, PROCESS, REFERENCES, INDEX, SHOW DATABASES, CREATE TEMPORARY TABLES, REPLICATION SLAVE, LOCK TABLES, SHOW VIEW, EVENT, REPLICATION CLIENT, TRIGGER ON *.* TO 'debezium'@'%';"
+mysql -h $host -u $user -p$password -e "FLUSH PRIVILEGES;"
+mysql -h $host -u $user -p$password -e "CREATE DATABASE IF NOT EXISTS sample_database;"
+mysql -h $host -u $user -p$password -e "CREATE TABLE IF NOT EXISTS sample_database.people(id int not null AUTO_INCREMENT primary key,name varchar(100),address varchar(255),phone_number varchar(100),created_at DATETIME) AUTO_INCREMENT=1;"
+
+# Loop to insert fake data
 while true
 do
   # Generate fake data
@@ -19,11 +27,11 @@ do
   datetime=$(date '+%Y-%m-%d %H:%M:%S')
 
   # Construct SQL query
-  query="INSERT INTO [DATABASE_TABLE] (name, address, phone_number, created_at) VALUES ('$name', '$address', '$phone_number', '$datetime')"
+  query="INSERT INTO $table (name, address, phone_number, created_at) VALUES ('$name', '$address', '$phone_number', '$datetime')"
 
   # Insert data into database
   mysql -h $host -u $user -p$password $database -e "$query"
 
   # Wait for a few minutes before inserting new data
-  sleep 300
+  sleep 2
 done
