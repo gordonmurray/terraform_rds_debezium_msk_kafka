@@ -1,13 +1,13 @@
 # RDS, Debezium and a MSK Kafka cluster using Terraform
 
-A project to stream data from an RDS instance to Kafka using Debezium using Apache Avro serialization.
+Creates an entire environment within its own VPC on AWS to stream data from a MariaDB RDS instance to Kafka using Debezium using Avro serialization
 
 * Creates a MariaDB RDS instance
 * Uses AWS Secrets Manager to store RDS access details
-* Creates a Kafka cluster using AWS MSK
-* Creates an EC2 instance with Debezium to monitor a table in the RDS instance
-* Installs the Apicurio schema registry for Apache Avro serialization
 * Generates some sample data in the Mariadb database
+* Creates a Kafka cluster using AWS MSK
+* Creates an EC2 instance with Debezium to replicate a table in the RDS instance to Kafka
+* Installs the Apicurio schema registry for Apache Avro serialization
 
  ## Deploy the infrastructure
 
@@ -55,8 +55,7 @@ Project: gordonmurray/terraform_rds_debezium_msk_kafka
  aws_db_instance.default
  ├─ Database instance (on-demand, Single-AZ, db.t4g.micro)                730  hours                         $12.41
  ├─ Storage (general purpose SSD, gp2)                                     20  GB                             $2.54
- ├─ Additional backup storage                               Monthly cost depends on usage: $0.095 per GB
- └─ Performance Insights API                                Monthly cost depends on usage: $0.01 per 1000 requests
+ └─ Additional backup storage                               Monthly cost depends on usage: $0.095 per GB
 
  aws_instance.debezium
  ├─ Instance usage (Linux/UNIX, on-demand, t3.small)                      730  hours                         $16.64
@@ -100,10 +99,10 @@ Project: gordonmurray/terraform_rds_debezium_msk_kafka
 
  OVERALL TOTAL                                                                                              $146.78
 ──────────────────────────────────
-40 cloud resources were detected:
+38 cloud resources were detected:
 ∙ 10 were estimated, 5 of which include usage-based costs, see https://infracost.io/usage-file
-∙ 29 were free:
-  ∙ 7 x aws_security_group_rule
+∙ 28 were free:
+  ∙ 8 x aws_security_group_rule
   ∙ 3 x aws_route_table_association
   ∙ 3 x aws_security_group
   ∙ 3 x aws_subnet
@@ -111,14 +110,10 @@ Project: gordonmurray/terraform_rds_debezium_msk_kafka
   ∙ 1 x aws_db_option_group
   ∙ 1 x aws_db_parameter_group
   ∙ 1 x aws_db_subnet_group
-  ∙ 1 x aws_eip
-  ∙ 1 x aws_eip_association
   ∙ 1 x aws_internet_gateway
   ∙ 1 x aws_key_pair
   ∙ 1 x aws_msk_configuration
   ∙ 1 x aws_route
   ∙ 1 x aws_route_table
   ∙ 1 x aws_vpc
-∙ 1 is not supported yet, see https://infracost.io/requested-resources:
-  ∙ 1 x aws_msk_scram_secret_association
   ```
