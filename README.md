@@ -20,7 +20,7 @@ Validate:
 Build:
 > packer build --var-file=variables.json debezium_instance.json
 
-Once your AMI has been created, you can now run Terraform to create the necessary infrastructure:
+Takes around 6 minutes. Once your AMI has been created, you can now run Terraform to create the necessary infrastructure:
 
 ```
 terraform init
