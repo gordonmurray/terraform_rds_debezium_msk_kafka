@@ -23,7 +23,16 @@ Build:
 
 Takes around 6 minutes.
 
-Once your AMI has been created, you can now run Terraform to create the necessary infrastructure:
+Once your AMI has been created, you can run Terraform to create the necessary infrastructure.
+
+First, create a terraform.tfvars file with the following values that are used to find your AMI and allow SSH acccess:
+
+```
+my_ip_address  = "123.123.123.123"
+aws_account_id = "01234567890"
+```
+
+Run Terraform:
 
 ```
 terraform init
@@ -32,15 +41,43 @@ terraform apply
 
 ## Debezium
 
+Debezium and the connector to the database should start automatically. To confirm, SSH in to the instance and use the following Curl statements to confirm:
+
 ### List connectors
 
 > curl -X GET http://localhost:8083/connectors
 
-### Add a Kafka connector to Debezium
+### Add the connector to Debezium
 
 > curl -X POST -H "Accept: application/json" -H "Content-Type: application/json" http://localhost:8083/connectors -d @connector.json
 
+## Security
+
+Powered by TFsec
+
+```
+  counts
+  ──────────────────────────────────────────
+  modules downloaded   0
+  modules processed    1
+  blocks processed     53
+  files read           19
+
+  results
+  ──────────────────────────────────────────
+  passed               33
+  ignored              0
+  critical             0
+  high                 4
+  medium               0
+  low                  1
+
+  33 passed, 5 potential problem(s) detected.
+```
+
 ## Estimated cost
+
+Powered by Infracost
 
 ```
 Project: gordonmurray/terraform_rds_debezium_msk_kafka
