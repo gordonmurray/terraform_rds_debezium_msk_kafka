@@ -6,7 +6,8 @@ A project to stream data from an RDS instance to Kafka using Debezium using Apac
 * Uses AWS Secrets Manager to store RDS access details
 * Creates a Kafka cluster using AWS MSK
 * Creates an EC2 instance with Debezium to monitor a table in the RDS instance
-* Uses Apicurio schema registry for Apache Avro serialization
+* Installs the Apicurio schema registry for Apache Avro serialization
+* Generates some sample data in the Mariadb database
 
  ## Deploy the infrastructure
 
@@ -20,32 +21,14 @@ Validate:
 Build:
 > packer build --var-file=variables.json debezium_instance.json
 
-Takes around 6 minutes. Once your AMI has been created, you can now run Terraform to create the necessary infrastructure:
+Takes around 6 minutes.
+
+Once your AMI has been created, you can now run Terraform to create the necessary infrastructure:
 
 ```
 terraform init
 terraform apply
 ```
-
-## Sample data for the RDS instance
-
-```
-CREATE USER 'debezium'@'%' IDENTIFIED BY 'password';
-GRANT SELECT, RELOAD, PROCESS, REFERENCES, INDEX, SHOW DATABASES, CREATE TEMPORARY TABLES, REPLICATION SLAVE, LOCK TABLES, SHOW VIEW, EVENT, REPLICATION CLIENT, TRIGGER ON *.* TO 'debezium'@'%';
-FLUSH PRIVILEGES;
-
-CREATE DATABASE IF NOT EXISTS sample_database;
-
-CREATE TABLE IF NOT EXISTS sample_database.people(
-    id int not null AUTO_INCREMENT primary key,
-    name varchar(100),
-    address varchar(255),
-    phone_number varchar(100),
-    created_at DATETIME
-) AUTO_INCREMENT=1;
-```
-
-'''
 
 ## Debezium
 
