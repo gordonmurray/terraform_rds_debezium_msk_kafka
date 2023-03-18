@@ -1,6 +1,6 @@
 # RDS, Debezium and a MSK Kafka cluster using Terraform
 
-Creates an entire environment within its own VPC on AWS to stream data from a MariaDB RDS instance to Kafka using Debezium using Avro serialization. Apicurio provides a schema registry for the data.
+Creates an entire environment within its own VPC on AWS to stream data from a MariaDB RDS instance to Kafka using Debezium with Avro serialization. Apicurio provides a schema registry for the data.
 
 * Creates a MariaDB RDS instance
 * Uses AWS Secrets Manager to store RDS access details
@@ -16,7 +16,7 @@ Creates an entire environment within its own VPC on AWS to stream data from a Ma
 - [Debezium](#debezium)
 - [Schema registry](#schema-registry)
 - [Security](#security)
-- [Infrastrcuture cost](#infrastrcuture-cost)
+- [Infrastructure cost](#estimated-cost)
 
  ## Prepare an AMI using Packer
 
