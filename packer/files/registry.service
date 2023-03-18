@@ -1,20 +1,13 @@
 [Unit]
 Description=registry
+After=network.target
+
 [Service]
-User=root
-# The configuration file application.properties should be here:
-
-#change this to your workspace
+User=ubuntu
 WorkingDirectory=/home/ubuntu/
-
-#path to executable.
-#executable is a bash script which calls jar file
 ExecStart=/home/ubuntu/start_registry.sh
-
-SuccessExitStatus=143
-TimeoutStopSec=10
-Restart=on-failure
-RestartSec=5
+TimeoutStopSec=180
+Restart=always
 
 [Install]
 WantedBy=multi-user.target

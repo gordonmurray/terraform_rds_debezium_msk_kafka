@@ -36,8 +36,6 @@ resource "aws_msk_cluster" "kafka" {
       iam   = false
       scram = false
     }
-
-    tls {}
   }
 
   encryption_info {
