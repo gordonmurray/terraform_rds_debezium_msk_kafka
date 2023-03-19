@@ -3,7 +3,7 @@ Description=ksqldb
 After=network.target
 
 [Service]
-User=ubuntu
+User=sudo
 WorkingDirectory=/usr/bin/
 ExecStart=/usr/bin/ksql-server-start /etc/ksqldb/ksql-server.properties
 Restart=always
