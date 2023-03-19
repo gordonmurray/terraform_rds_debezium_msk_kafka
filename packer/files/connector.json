@@ -14,7 +14,7 @@
         "database.user": "[DATABASE_USERNAME]",
         "database.password": "[DATABASE_PASSWORD]",
         "database.whitelist": "[DATABASE_SCHEMA]",
-        "table.include.list": "[DATABASE_SCHEMA].[DATABASE_TABLE]",
+        "table.include.list": "[DATABASE_SCHEMA].users,[DATABASE_SCHEMA].products,[DATABASE_SCHEMA].purchases",
         "internal.key.converter.schemas.enable": "false",
         "transforms.unwrap.add.source.fields": "ts_ms",
         "key.converter.schemas.enable": "false",
