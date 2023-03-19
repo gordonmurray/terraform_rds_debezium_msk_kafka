@@ -7,7 +7,7 @@ output "rds_username" {
 }
 
 output "rds_password" {
-  value     = aws_db_instance.default.password
+  value     = random_password.password.result
   sensitive = true
 }
 

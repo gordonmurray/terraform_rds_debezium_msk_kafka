@@ -40,7 +40,7 @@ resource "aws_instance" "debezium" {
     brokers           = aws_msk_cluster.kafka.bootstrap_brokers
     database_host     = aws_db_instance.default.address
     database_username = aws_db_instance.default.username
-    database_password = aws_db_instance.default.password
+    database_password = random_password.password.result
     database_schema   = "sample_database"
   })
 

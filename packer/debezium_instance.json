@@ -26,7 +26,7 @@
                 "echo set debconf to Noninteractive",
                 "echo 'debconf debconf/frontend select Noninteractive' | sudo debconf-set-selections",
                 "sudo apt-get update",
-                "sudo apt-get install jq openjdk-11-jre openjdk-11-jdk -y",
+                "sudo apt-get install mariadb-client-core-10.6 jq openjdk-11-jre openjdk-11-jdk -y",
                 "curl https://downloads.apache.org/kafka/3.4.0/kafka_2.12-3.4.0.tgz -o ~/kafka.tgz",
                 "mkdir ~/kafka && cd ~/kafka",
                 "tar -xvzf ~/kafka.tgz --strip 1",

@@ -30,8 +30,8 @@ do
   product=$(echo "$response" | jq -r '.sport')
   price=$(echo "$response" | jq -r '.weight')
   datetime=$(date +"%Y-%m-%d %H:%M:%S")
-  user_id=echo $((RANDOM % 100))
-  product_id=echo $((RANDOM % 100))
+  user_id=$(( ( RANDOM % 99 )  + 1 ))
+  product_id=$(( ( RANDOM % 99 )  + 1 ))
 
   mysql -h $host -u $user -p$password $database -e "INSERT INTO users (name, address, phone_number, created_at) VALUES ('$name', '$address', '$phone_number', '$datetime')"
   mysql -h $host -u $user -p$password $database -e "INSERT INTO products (product, price, created_at) VALUES ('$product', '$price', '$datetime')"
