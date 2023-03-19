@@ -26,20 +26,29 @@
                 "echo set debconf to Noninteractive",
                 "echo 'debconf debconf/frontend select Noninteractive' | sudo debconf-set-selections",
                 "sudo apt-get update",
-                "sudo apt-get install mariadb-client-core-10.6 jq openjdk-11-jre openjdk-11-jdk -y",
+                "sudo apt-get install mariadb-client-core-10.6 jq openjdk-11-jre openjdk-11-jdk software-properties-common curl gnupg -y",
                 "curl https://downloads.apache.org/kafka/3.4.0/kafka_2.12-3.4.0.tgz -o ~/kafka.tgz",
                 "mkdir ~/kafka && cd ~/kafka",
                 "tar -xvzf ~/kafka.tgz --strip 1",
+                "###",
                 "wget https://repo1.maven.org/maven2/io/debezium/debezium-connector-mysql/2.1.2.Final/debezium-connector-mysql-2.1.2.Final-plugin.tar.gz",
                 "tar xzf debezium-connector-mysql-2.1.2.Final-plugin.tar.gz",
                 "sudo mv debezium-connector-mysql /usr/share/java/",
+                "###",
                 "wget https://github.com/Apicurio/apicurio-registry/releases/download/2.4.1.Final/apicurio-registry-storage-kafkasql-2.4.1.Final-all.tar.gz",
                 "tar xzf apicurio-registry-storage-kafkasql-2.4.1.Final-all.tar.gz",
                 "sudo mv apicurio-registry-storage-kafkasql-2.4.1.Final-runner.jar /home/ubuntu/",
+                "###",
                 "wget https://repo1.maven.org/maven2/io/apicurio/apicurio-registry-distro-connect-converter/2.4.1.Final/apicurio-registry-distro-connect-converter-2.4.1.Final.tar.gz",
                 "sudo mkdir -p /usr/share/java/apicurio-registry-connect-converter",
-                "sudo tar xzf /home/ubuntu/apicurio-registry-distro-connect-converter-2.4.1.Final.tar.gz -C /usr/share/java/apicurio-registry-connect-converter",
-                "curl https://raw.githubusercontent.com/dwyl/english-words/master/words.txt -o /home/ubuntu/words.txt"
+                "sudo tar xzf apicurio-registry-distro-connect-converter-2.4.1.Final.tar.gz -C /usr/share/java/apicurio-registry-connect-converter",
+                "###",
+                "curl https://raw.githubusercontent.com/dwyl/english-words/master/words.txt -o /home/ubuntu/words.txt",
+                "###",
+                "curl -sq http://ksqldb-packages.s3.amazonaws.com/deb/0.28/archive.key | sudo apt-key add -",
+                "sudo add-apt-repository --yes \"deb http://ksqldb-packages.s3.amazonaws.com/deb/0.28 stable main\"",
+                "sudo apt-get update",
+                "sudo apt install confluent-ksqldb -y"
             ]
         },
         {
@@ -54,8 +63,18 @@
         },
         {
             "type": "file",
+            "source": "./files/ksqldb.service",
+            "destination": "/home/ubuntu/ksqldb.service"
+        },
+        {
+            "type": "file",
             "source": "./files/connect-distributed.properties",
             "destination": "/home/ubuntu/kafka/config/connect-distributed.properties"
+        },
+        {
+            "type": "file",
+            "source": "./files/ksql-server.properties",
+            "destination": "/home/ubuntu/kafka/config/ksql-server.properties"
         },
         {
             "type": "file",
