@@ -42,7 +42,6 @@ resource "aws_instance" "debezium" {
     database_username = aws_db_instance.default.username
     database_password = aws_db_instance.default.password
     database_schema   = "sample_database"
-    database_table    = "people"
   })
 
 }
