@@ -22,7 +22,7 @@ resource "aws_db_instance" "default" {
   storage_type                 = "gp2"
   engine                       = "mariadb"
   engine_version               = "10.6.7"
-  instance_class               = "db.r5.large"
+  instance_class               = "db.t3.small"
   db_subnet_group_name         = aws_db_subnet_group.default.name
   username                     = "Admin"
   password                     = random_password.password.result
