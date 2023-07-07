@@ -36,7 +36,7 @@ resource "aws_kms_key" "cloudwatch_key" {
         "Sid" : "Allow CloudWatch Logs to use the KMS key",
         "Effect" : "Allow",
         "Principal" : {
-          "Service" : "logs.eu-west-1.amazonaws.com"
+          "Service" : "logs.${var.aws_region}.amazonaws.com"
         },
         "Action" : [
           "kms:Encrypt",
